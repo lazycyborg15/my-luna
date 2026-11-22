@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Happy Birthday, My Love</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Quicksand:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#131b21;--bg2:#1f2f36;--ink:#f6f1e7;--soft:#a9bfb8;--teal:#3fbf9f;--stem:#2e9c86;--gold:#ffc928;--card:#1f2c33;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;min-height:100vh;background:radial-gradient(circle at 50% 40%,var(--bg2),var(--bg) 70%);color:var(--ink);font-family:Quicksand,system-ui,sans-serif;overflow-x:hidden}
+button{font:inherit;font-weight:600;border:0;border-radius:99px;cursor:pointer}
+button:focus-visible,.node:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.stage{position:relative;z-index:1;min-height:100vh;display:grid;place-items:center;padding:12px}
+.wreath{position:relative;container-type:inline-size;width:min(94vw,480px,calc(86vh*.8));aspect-ratio:400/500}
+.wreath>svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.center{position:absolute;left:27%;right:27%;top:22%;bottom:18%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:3cqw}
+h1{font-family:'Dancing Script',cursive;font-weight:700;font-size:clamp(1.9rem,12cqw,3.4rem);line-height:1.02;margin:0}
+.pop{background:var(--gold);color:#3b2f00;padding:2.4cqw 5cqw;font-size:clamp(.95rem,4.4cqw,1.25rem);line-height:1.15}
+.pop small{display:block;font-weight:500;font-size:.72em;opacity:.8}
+.link{background:none;color:var(--soft);text-decoration:underline;padding:4px 8px;font-size:.9rem}
+.stem{stroke:var(--stem);stroke-width:4;stroke-linecap:round;fill:none}
+.leaf{fill:var(--teal)}
+.moon{position:fixed;z-index:0;pointer-events:none;top:calc(env(safe-area-inset-top,0px) + 7vh);left:50%;width:min(48vw,210px);aspect-ratio:1;border-radius:50%;transform:translateX(-50%);background:radial-gradient(circle at 34% 30%,#fffef2 0,#f7f1d8 45%,#e4dcb8 100%);box-shadow:0 0 40px 12px rgba(255,248,210,.35),0 0 120px 50px rgba(255,248,210,.16),inset -14px -10px 30px rgba(190,180,140,.4)}
+.moon::before{content:"";position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 30% 35%,rgba(170,160,120,.35) 0 9%,transparent 10%),radial-gradient(circle at 62% 26%,rgba(170,160,120,.3) 0 6%,transparent 7%),radial-gradient(circle at 56% 62%,rgba(170,160,120,.35) 0 12%,transparent 13%),radial-gradient(circle at 25% 68%,rgba(170,160,120,.25) 0 7%,transparent 8%),radial-gradient(circle at 78% 52%,rgba(170,160,120,.25) 0 5%,transparent 6%)}
+.stars{position:fixed;z-index:0;left:0;top:0;width:2px;height:2px;border-radius:50%;pointer-events:none;box-shadow:8vw 6vh #fff,22vw 15vh #dfe9e6,35vw 4vh #fff,70vw 9vh #fff,86vw 5vh #dfe9e6,93vw 19vh #fff,12vw 29vh #fff,80vw 31vh #dfe9e6,5vw 44vh #fff,95vw 48vh #fff,15vw 70vh #dfe9e6,90vw 74vh #fff,28vw 88vh #fff,65vw 92vh #dfe9e6,48vw 96vh #fff}
+@media (prefers-reduced-motion:no-preference){.sp{transform-origin:0 0;animation:spin2 var(--sp,18s) linear infinite}.stars{animation:twinkle 4s ease-in-out infinite alternate}}
+@keyframes spin2{to{transform:rotate(360deg)}}
+@keyframes twinkle{from{opacity:.35}to{opacity:1}}
+@keyframes glow{to{box-shadow:0 0 56px 18px rgba(255,248,210,.45),0 0 150px 70px rgba(255,248,210,.22),inset -14px -10px 30px rgba(190,180,140,.4)}}
+@media (prefers-reduced-motion:no-preference){
+.draw{stroke-dasharray:1;stroke-dashoffset:1;animation:draw var(--dt,3.4s) cubic-bezier(.4,.1,.3,1) var(--dd,0s) forwards}
+.grow{transform-origin:0 0;animation:grow 1.1s cubic-bezier(.3,1.5,.5,1) var(--d,0s) both}
+.greet{animation:fade 1.6s ease 2.4s both}
+.pop{animation:grow .9s cubic-bezier(.2,1.6,.4,1) 3.8s both}
+.link{animation:fade 1s ease 4.4s both}
+.node{transform-box:fill-box;transform-origin:center;animation:grow .9s cubic-bezier(.3,1.5,.5,1) var(--dd) both}
+#scene{animation:reveal .5s ease-out}
+#field svg{animation:spin var(--t) linear infinite}
+}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes grow{from{transform:scale(0)}to{transform:scale(1)}}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}}
+@keyframes reveal{from{opacity:0;transform:scale(.97)}}
+@keyframes spin{to{transform:rotate(calc(var(--r) + 360deg))}}
+#scene{position:fixed;inset:0;z-index:5;overflow-y:auto;background:radial-gradient(circle at 50% 0%,#4d2842,#261b2e 55%,#171b24)}
+#scene[hidden]{display:none}
+body.in-scene .stage,body.in-scene .stars,body.in-scene .moon{display:none}
+#field{position:fixed;inset:0;pointer-events:none;opacity:.28}
+#hearts{position:fixed;inset:0;pointer-events:none;overflow:hidden}
+#hearts i{position:absolute;bottom:-40px;left:var(--x);font-style:normal;font-size:var(--s);color:#ff8fb1;opacity:0}
+.hb{transform-box:fill-box;transform-origin:center}
+@media (prefers-reduced-motion:no-preference){#hearts i{animation:rise var(--t) linear infinite;animation-delay:var(--dl)}}
+@keyframes rise{0%{opacity:0;transform:translate(0,0)}12%{opacity:.85}100%{opacity:0;transform:translate(var(--d),-110vh)}}
+#field svg{position:absolute;overflow:visible;width:var(--s);height:var(--s);left:calc(var(--x) - var(--s)/2);top:calc(var(--y) - var(--s)/2);transform:rotate(var(--r));will-change:transform}
+#back{position:fixed;z-index:6;left:12px;top:calc(env(safe-area-inset-top,0px) + 12px);background:var(--card);color:var(--ink);padding:9px 16px}
+#export{position:fixed;z-index:6;right:12px;top:calc(env(safe-area-inset-top,0px) + 12px);background:var(--gold);color:#3b2f00;padding:9px 16px}
+html.locked .edit-only{display:none!important}
+.tree{position:relative;max-width:460px;margin:0 auto;padding:64px 12px 60px;text-align:center}
+.tree h2{font-family:'Dancing Script',cursive;font-size:2.4rem;margin:0}
+.tree p{color:var(--soft);margin:0 0 6px}
+.tree svg{width:100%;height:auto;display:block;overflow:visible}
+.node{cursor:pointer}
+.node .fl{transform-box:fill-box;transform-origin:center;transition:transform .25s}
+.node:hover .fl,.node:focus-visible .fl{transform:scale(1.18) rotate(18deg)}
+.node text{font-size:15px;font-weight:600;fill:var(--ink);paint-order:stroke;stroke:var(--bg);stroke-width:5px}
+dialog{border:0;border-radius:22px;padding:0;background:var(--card);color:var(--ink);width:min(92vw,420px);box-shadow:0 20px 60px #000a}
+dialog::backdrop{background:#050a0dcc}
+.ph{aspect-ratio:4/5;width:100%;background:repeating-linear-gradient(45deg,var(--bg),var(--bg) 12px,var(--bg2) 12px,var(--bg2) 24px);display:grid;place-items:center;overflow:hidden;border-radius:22px 22px 0 0}
+.ph img{width:100%;height:100%;object-fit:cover;display:block}
+.ph span{color:var(--soft);padding:20px;text-align:center}
+.bar{padding:14px 16px 16px;display:flex;flex-direction:column;gap:10px}
+.bar input{font:inherit;font-size:1.05rem;padding:10px 12px;border-radius:12px;border:2px solid var(--bg2);background:var(--bg);color:var(--ink);width:100%}
+.row{display:flex;gap:8px}
+.btn,.row button{flex:1;text-align:center;padding:10px 18px;background:var(--gold);color:#3b2f00;cursor:pointer;border-radius:99px;font-weight:600}
+.row .alt{background:var(--bg2);color:var(--ink)}
+.sheet{padding:28px 26px 20px;font-family:'Dancing Script',cursive;font-size:1.45rem;line-height:1.45}
+.sheet p{margin:0 0 .7em}
+.sheet .sign{text-align:right;font-size:1.6rem}
+.sheet .row{margin-top:14px;font-family:Quicksand,sans-serif}
+</style>
+</head>
+<body>
+<div class="stars" aria-hidden="true"></div>
+<div class="moon" aria-hidden="true"></div>
+<main class="stage">
+<div class="wreath">
+<svg id="wr" viewBox="0 0 400 500" aria-hidden="true"></svg>
+<div class="center">
+<h1 class="greet">Happy<br>Birthday,<br>My Love</h1>
+<button class="pop" id="open">Our blooms<small>our memories</small></button>
+<button class="link" id="lopen">Read my letter</button>
+</div>
+</div>
+</main>
+
+<div id="scene" hidden>
+<div id="field" aria-hidden="true"></div>
+<div id="hearts" aria-hidden="true"></div>
+<button id="back">Back</button>
+<button id="export" class="edit-only">Save photos &amp; names</button>
+<section class="tree">
+<h2>Our blooms ♥</h2>
+<p>Every flower holds a little piece of us</p>
+<svg viewBox="0 0 400 820" role="group" aria-label="Branch with five memory daisies">
+<g fill="none" stroke="var(--stem)" stroke-linecap="round">
+<path class="draw" pathLength="1" style="--dt:2.4s" stroke-width="12" d="M200 820 C190 700 215 620 200 520 C185 420 215 330 200 230 C190 150 205 90 200 40"/>
+<g stroke-width="7" style="--dt:1.2s">
+<path class="draw" pathLength="1" style="--dd:1s;--dt:1.2s" d="M200 690 C250 670 290 650 320 610"/>
+<path class="draw" pathLength="1" style="--dd:1.3s;--dt:1.2s" d="M203 560 C150 540 110 520 80 470"/>
+<path class="draw" pathLength="1" style="--dd:1.6s;--dt:1.2s" d="M200 420 C250 400 290 380 320 330"/>
+<path class="draw" pathLength="1" style="--dd:1.9s;--dt:1.2s" d="M203 290 C150 270 110 250 80 200"/>
+<path class="draw" pathLength="1" style="--dd:2.2s;--dt:1.2s" d="M200 150 C240 130 270 110 290 70"/></g></g>
+<g fill="var(--teal)"><ellipse cx="260" cy="655" rx="22" ry="9" transform="rotate(-30 260 655)"/><ellipse cx="145" cy="535" rx="22" ry="9" transform="rotate(30 145 535)"/><ellipse cx="260" cy="395" rx="22" ry="9" transform="rotate(-30 260 395)"/><ellipse cx="145" cy="270" rx="22" ry="9" transform="rotate(30 145 270)"/><ellipse cx="235" cy="125" rx="20" ry="8" transform="rotate(-30 235 125)"/><ellipse cx="215" cy="760" rx="22" ry="9" transform="rotate(25 215 760)"/><ellipse cx="185" cy="360" rx="20" ry="8" transform="rotate(-150 185 360)"/></g>
+<g fill="#ff8fb1" font-size="24" text-anchor="middle"><text class="hb" x="232" y="745">♥</text><text class="hb" x="165" y="615">♥</text><text class="hb" x="236" y="470">♥</text><text class="hb" x="166" y="345">♥</text><text class="hb" x="238" y="205">♥</text><text class="hb" x="160" y="100">♥</text></g>
+<g id="nodes"></g>
+</svg>
+</section>
+</div>
+
+<dialog id="dlg" aria-label="Memory">
+<div class="ph" id="ph"></div>
+<div class="bar">
+<input type="text" id="cap" maxlength="80" placeholder="Name this bloom ♥" aria-label="Bloom name">
+<div class="row"><label class="btn edit-only" tabindex="0" id="up">Add our photo<input type="file" id="file" accept="image/*" hidden></label><button class="alt" id="close">Close</button></div>
+</div>
+</dialog>
+
+<dialog id="letter" aria-label="Love letter">
+<div class="sheet">
+<p>My love,</p>
+<p>Happy birthday! Every day with you feels like a field of daisies in full bloom: bright, gentle, and full of little joys. Thank you for your laughter, your patience, and the way you make ordinary moments feel like magic.</p>
+<p>I hope this year brings you everything you wish for, and I hope I get to be there for all of it.</p>
+<p>I love you today, tomorrow, and always.</p>
+<p class="sign">Forever yours ♥</p>
+<div class="row"><button class="alt" id="lclose">Close</button></div>
+</div>
+</dialog>
+
+<script id="cfg" type="application/json">{"locked":true,"names":["Our first hello","Sweet little day","Us being silly","Our happy place","Forever us"],"photos":{}}</script>
+<script>
+(function(){
+var KEY='our-blooms',CFG=JSON.parse(document.getElementById('cfg').textContent);
+document.documentElement.classList.toggle('locked',!!CFG.locked);
+var NS='http://www.w3.org/2000/svg';
+function el(t,a,p){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e}
+function $(i){return document.getElementById(i)}
+
+/* whole daisy, defined once */
+var hid=el('svg',{width:0,height:0,style:'position:absolute','aria-hidden':'true'},document.body);
+var sym=el('symbol',{id:'daisy',viewBox:'-50 -50 100 100'},el('defs',{},hid));
+var pg=el('g',{fill:'#fff',stroke:'#b9d3c8','stroke-width':1.2},sym);
+for(var i=0;i<12;i++)el('ellipse',{cx:0,cy:-27,rx:8,ry:20,transform:'rotate('+i*30+')'},pg);
+el('circle',{r:13,fill:'#ffc928',stroke:'#e5a800','stroke-width':2},sym);
+function daisy(p,x,y,s,d,cls){
+  var g=el('g',{transform:'translate('+x+' '+y+') scale('+s/100+')'},p);
+  var k=el('g',{class:cls||'grow',style:'--d:'+d+'s'},g);
+  var r=Math.round(x+y);
+  var u=el('g',{class:'sp',style:'--sp:'+(14+r%6*3)+'s;animation-direction:'+(r%2?'reverse':'normal')},k);
+  el('use',{href:'#daisy',x:-50,y:-50,width:100,height:100},u);
+}
+
+/* growing wreath: one branch built, then mirrored */
+var wr=$('wr');
+function build(){
+wr.innerHTML='';var L=el('g',{},wr);
+var stem=el('path',{d:'M200 478 C150 478 84 436 74 345 C64 255 100 190 152 84','class':'draw stem',pathLength:1},L);
+var len=stem.getTotalLength(),T=3.4;
+[.1,.18,.27,.33,.42,.5,.55,.64,.7,.78,.84,.9].forEach(function(f,i){
+  var p=stem.getPointAtLength(f*len),q=stem.getPointAtLength(Math.min(len,f*len+3));
+  var a=Math.atan2(q.y-p.y,q.x-p.x)*180/Math.PI+(i%2?48:-48);
+  var g=el('g',{transform:'translate('+p.x+' '+p.y+') rotate('+a+') scale('+(.8+(i%3)*.12)+')'},L);
+  el('path',{d:'M0 0C6 -9 20 -9 32 0C20 9 6 9 0 0Z','class':'leaf grow',style:'--d:'+(f*T+.3)+'s'},g);
+});
+[[.36,56],[.58,52],[.8,48],[.97,42]].forEach(function(a){
+  var p=stem.getPointAtLength(a[0]*len);daisy(L,p.x,p.y,a[1],a[0]*T+.5);
+});
+var R=L.cloneNode(true);R.setAttribute('transform','translate(400 0) scale(-1 1)');wr.appendChild(R);
+}
+build();
+
+/* memory branch */
+var NODES=[{x:320,y:610},{x:80,y:470},{x:320,y:330},{x:80,y:200},{x:290,y:70}];
+var DEFAULTS=CFG.names,LOCKED=!!CFG.locked;
+var saved=null;
+if(!LOCKED){try{saved=JSON.parse(localStorage.getItem(KEY))}catch(e){}}
+var names=(saved&&saved.names)||CFG.names.slice(),photos=(saved&&saved.photos)||CFG.photos||{};
+var cur=-1,tg=$('nodes');
+var dlg=$('dlg'),ph=$('ph'),cap=$('cap'),file=$('file');
+cap.readOnly=LOCKED;
+function label(i){return names[i]||DEFAULTS[i]}
+function save(){if(LOCKED)return;try{localStorage.setItem(KEY,JSON.stringify({names:names,photos:photos}))}catch(e){}}
+function render(){
+  var src=photos[cur];
+  ph.innerHTML=src?'<img alt="Our memory">':'<span>'+(LOCKED?'No photo yet':'Add a photo of us here')+'</span>';
+  if(src)ph.firstChild.src=src;
+  cap.value=names[cur]||'';
+}
+function openM(i){cur=i;render();if(dlg.showModal)dlg.showModal();else dlg.setAttribute('open','')}
+NODES.forEach(function(n,i){
+  var e=el('g',{class:'node',tabindex:0,role:'button','aria-label':'Open memory '+(i+1),style:'--dd:'+(1.4+i*.35)+'s'},tg);
+  el('circle',{cx:n.x,cy:n.y,r:50,fill:'transparent'},e);
+  daisy(el('g',{class:'fl'},e),n.x,n.y,84,0,'x');
+  var t=el('text',{x:n.x,y:n.y+64,'text-anchor':'middle'},e);t.textContent=label(i);
+  e.addEventListener('click',function(){openM(i)});
+  e.addEventListener('keydown',function(ev){if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();openM(i)}});
+});
+file.addEventListener('change',function(){
+  var f=file.files&&file.files[0];if(!f)return;
+  var i=cur,r=new FileReader();
+  r.onload=function(){
+    var img=new Image();
+    img.onload=function(){
+      var k=Math.min(1,1000/Math.max(img.width,img.height)),c=document.createElement('canvas');
+      c.width=Math.round(img.width*k);c.height=Math.round(img.height*k);
+      c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+      photos[i]=c.toDataURL('image/jpeg',.82);save();render();
+    };
+    img.src=r.result;
+  };
+  r.readAsDataURL(f);file.value='';
+});
+cap.addEventListener('input',function(){
+  names[cur]=cap.value;save();
+  tg.children[cur].querySelector('text').textContent=label(cur);
+});
+$('close').addEventListener('click',function(){dlg.close()});
+$('up').addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();file.click()}});
+dlg.addEventListener('click',function(e){if(e.target===dlg)dlg.close()});
+
+/* scene: background full of whole daisies */
+function buildField(){
+  var W=innerWidth,H=innerHeight,cols=Math.max(2,Math.round(W/170)),rows=Math.max(4,Math.round(H/170)),cw=W/cols,ch=H/rows,s=Math.min(cw,ch)*.8,h='',n=0;
+  for(var y=0;y<rows;y++)for(var x=0;x<cols;x++){
+    h+='<svg viewBox="-50 -50 100 100" style="--s:'+s.toFixed(0)+'px;--x:'+((x+.5)*cw).toFixed(0)+'px;--y:'+((y+.5)*ch).toFixed(0)+'px;--r:'+((n*37)%60)+'deg;--t:'+(30+(n%5)*5)+'s;animation-direction:'+(n++%2?'reverse':'normal')+'"><use href="#daisy" x="-50" y="-50" width="100" height="100"/></svg>';
+  }
+  $('field').innerHTML=h;
+  var hh='';
+  for(var k=0;k<8;k++)hh+='<i style="--s:'+(14+k%4*6)+'px;--x:'+((k*11+5)%94)+'%;--t:'+(9+k%5*2)+'s;--dl:-'+(k*1.6).toFixed(1)+'s;--d:'+((k%2?1:-1)*(20+k%3*15))+'px">♥</i>';
+  $('hearts').innerHTML=hh;
+}
+$('open').addEventListener('click',function(){
+  var s=$('scene');buildField();s.hidden=false;s.scrollTop=0;document.body.style.overflow='hidden';document.body.classList.add('in-scene');$('back').focus();
+});
+$('back').addEventListener('click',function(){
+  $('scene').hidden=true;document.body.style.overflow='';document.body.classList.remove('in-scene');
+  build();
+  ['.greet','#open','#lopen'].forEach(function(q){var e=document.querySelector(q);e.style.animation='none';void e.offsetWidth;e.style.animation='';});
+});
+
+/* save names and photos as a JSON file; build.js reads it to make the locked copy */
+function exportData(){
+  var json=JSON.stringify({names:names,photos:photos},null,1);
+  var url=URL.createObjectURL(new Blob([json],{type:'application/json'}));
+  var a=document.createElement('a');a.href=url;a.download='our-blooms-data.json';a.click();
+  setTimeout(function(){URL.revokeObjectURL(url)},1000);
+}
+$('export').addEventListener('click',exportData);
+
+/* letter */
+var ltr=$('letter');
+$('lopen').addEventListener('click',function(){if(ltr.showModal)ltr.showModal();else ltr.setAttribute('open','')});
+$('lclose').addEventListener('click',function(){ltr.close()});
+ltr.addEventListener('click',function(e){if(e.target===ltr)ltr.close()});
+})();
+</script>
+</body>
+</html>

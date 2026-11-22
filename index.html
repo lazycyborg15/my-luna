@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Happy Birthday, My Love</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Quicksand:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="stars" aria-hidden="true"></div>
+<div class="moon" aria-hidden="true"></div>
+<main class="stage">
+<div class="wreath">
+<svg id="wr" viewBox="0 0 400 500" aria-hidden="true"></svg>
+<div class="center">
+<h1 class="greet">Happy<br>Birthday,<br>My Love</h1>
+<button class="pop" id="open">Our blooms<small>our memories</small></button>
+<button class="link" id="lopen">Read my letter</button>
+</div>
+</div>
+</main>
+
+<div id="scene" hidden>
+<div id="field" aria-hidden="true"></div>
+<div id="hearts" aria-hidden="true"></div>
+<button id="back">Back</button>
+<button id="export" class="edit-only">Save photos &amp; names</button>
+<section class="tree">
+<h2>Our blooms ♥</h2>
+<p>Every flower holds a little piece of us</p>
+<svg viewBox="0 0 400 820" role="group" aria-label="Branch with five memory daisies">
+<g fill="none" stroke="var(--stem)" stroke-linecap="round">
+<path class="draw" pathLength="1" style="--dt:2.4s" stroke-width="12" d="M200 820 C190 700 215 620 200 520 C185 420 215 330 200 230 C190 150 205 90 200 40"/>
+<g stroke-width="7" style="--dt:1.2s">
+<path class="draw" pathLength="1" style="--dd:1s;--dt:1.2s" d="M200 690 C250 670 290 650 320 610"/>
+<path class="draw" pathLength="1" style="--dd:1.3s;--dt:1.2s" d="M203 560 C150 540 110 520 80 470"/>
+<path class="draw" pathLength="1" style="--dd:1.6s;--dt:1.2s" d="M200 420 C250 400 290 380 320 330"/>
+<path class="draw" pathLength="1" style="--dd:1.9s;--dt:1.2s" d="M203 290 C150 270 110 250 80 200"/>
+<path class="draw" pathLength="1" style="--dd:2.2s;--dt:1.2s" d="M200 150 C240 130 270 110 290 70"/></g></g>
+<g fill="var(--teal)"><ellipse cx="260" cy="655" rx="22" ry="9" transform="rotate(-30 260 655)"/><ellipse cx="145" cy="535" rx="22" ry="9" transform="rotate(30 145 535)"/><ellipse cx="260" cy="395" rx="22" ry="9" transform="rotate(-30 260 395)"/><ellipse cx="145" cy="270" rx="22" ry="9" transform="rotate(30 145 270)"/><ellipse cx="235" cy="125" rx="20" ry="8" transform="rotate(-30 235 125)"/><ellipse cx="215" cy="760" rx="22" ry="9" transform="rotate(25 215 760)"/><ellipse cx="185" cy="360" rx="20" ry="8" transform="rotate(-150 185 360)"/></g>
+<g fill="#ff8fb1" font-size="24" text-anchor="middle"><text class="hb" x="232" y="745">♥</text><text class="hb" x="165" y="615">♥</text><text class="hb" x="236" y="470">♥</text><text class="hb" x="166" y="345">♥</text><text class="hb" x="238" y="205">♥</text><text class="hb" x="160" y="100">♥</text></g>
+<g id="nodes"></g>
+</svg>
+</section>
+</div>
+
+<dialog id="dlg" aria-label="Memory">
+<div class="ph" id="ph"></div>
+<div class="bar">
+<input type="text" id="cap" maxlength="80" placeholder="Name this bloom ♥" aria-label="Bloom name">
+<div class="row"><label class="btn edit-only" tabindex="0" id="up">Add our photo<input type="file" id="file" accept="image/*" hidden></label><button class="alt" id="close">Close</button></div>
+</div>
+</dialog>
+
+<dialog id="letter" aria-label="Love letter">
+<div class="sheet">
+<p>My love,</p>
+<p>Happy birthday! Every day with you feels like a field of daisies in full bloom: bright, gentle, and full of little joys. Thank you for your laughter, your patience, and the way you make ordinary moments feel like magic.</p>
+<p>I hope this year brings you everything you wish for, and I hope I get to be there for all of it.</p>
+<p>I love you today, tomorrow, and always.</p>
+<p class="sign">Forever yours ♥</p>
+<div class="row"><button class="alt" id="lclose">Close</button></div>
+</div>
+</dialog>
+
+<script id="cfg" type="application/json">{"locked":false,"names":["Our first hello","Sweet little day","Us being silly","Our happy place","Forever us"],"photos":{}}</script>
+<script src="script.js"></script>
+</body>
+</html>
