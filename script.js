@@ -1,6 +1,5 @@
 (function(){
-var KEY='our-blooms',CFG=JSON.parse(document.getElementById('cfg').textContent);
-document.documentElement.classList.toggle('locked',!!CFG.locked);
+var CFG=JSON.parse(document.getElementById('cfg').textContent);
 var NS='http://www.w3.org/2000/svg';
 function el(t,a,p){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e}
 function $(i){return document.getElementById(i)}
@@ -40,20 +39,14 @@ build();
 
 /* memory branch */
 var NODES=[{x:320,y:610},{x:80,y:470},{x:320,y:330},{x:80,y:200},{x:290,y:70}];
-var DEFAULTS=CFG.names,LOCKED=!!CFG.locked;
-var saved=null;
-if(!LOCKED){try{saved=JSON.parse(localStorage.getItem(KEY))}catch(e){}}
-var names=(saved&&saved.names)||CFG.names.slice(),photos=(saved&&saved.photos)||CFG.photos||{};
+var names=CFG.names,photos=CFG.photos||{};
 var cur=-1,tg=$('nodes');
-var dlg=$('dlg'),ph=$('ph'),cap=$('cap'),file=$('file');
-cap.readOnly=LOCKED;
-function label(i){return names[i]||DEFAULTS[i]}
-function save(){if(LOCKED)return;try{localStorage.setItem(KEY,JSON.stringify({names:names,photos:photos}))}catch(e){}}
+var dlg=$('dlg'),ph=$('ph');
+function label(i){return names[i]}
 function render(){
   var src=photos[cur];
-  ph.innerHTML=src?'<img alt="Our memory">':'<span>'+(LOCKED?'No photo yet':'Add a photo of us here')+'</span>';
+  ph.innerHTML=src?'<img alt="Our memory">':'<span>No photo yet</span>';
   if(src)ph.firstChild.src=src;
-  cap.value=names[cur]||'';
 }
 function openM(i){cur=i;render();if(dlg.showModal)dlg.showModal();else dlg.setAttribute('open','')}
 NODES.forEach(function(n,i){
@@ -64,27 +57,7 @@ NODES.forEach(function(n,i){
   e.addEventListener('click',function(){openM(i)});
   e.addEventListener('keydown',function(ev){if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();openM(i)}});
 });
-file.addEventListener('change',function(){
-  var f=file.files&&file.files[0];if(!f)return;
-  var i=cur,r=new FileReader();
-  r.onload=function(){
-    var img=new Image();
-    img.onload=function(){
-      var k=Math.min(1,1000/Math.max(img.width,img.height)),c=document.createElement('canvas');
-      c.width=Math.round(img.width*k);c.height=Math.round(img.height*k);
-      c.getContext('2d').drawImage(img,0,0,c.width,c.height);
-      photos[i]=c.toDataURL('image/jpeg',.82);save();render();
-    };
-    img.src=r.result;
-  };
-  r.readAsDataURL(f);file.value='';
-});
-cap.addEventListener('input',function(){
-  names[cur]=cap.value;save();
-  tg.children[cur].querySelector('text').textContent=label(cur);
-});
 $('close').addEventListener('click',function(){dlg.close()});
-$('up').addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();file.click()}});
 dlg.addEventListener('click',function(e){if(e.target===dlg)dlg.close()});
 
 /* scene: background full of whole daisies */
@@ -108,15 +81,6 @@ $('back').addEventListener('click',function(){
   build();
   ['.greet','#open','#lopen'].forEach(function(q){var e=document.querySelector(q);e.style.animation='none';void e.offsetWidth;e.style.animation='';});
 });
-
-/* save names and photos as a JSON file; build.js reads it to make the locked copy */
-function exportData(){
-  var json=JSON.stringify({names:names,photos:photos},null,1);
-  var url=URL.createObjectURL(new Blob([json],{type:'application/json'}));
-  var a=document.createElement('a');a.href=url;a.download='our-blooms-data.json';a.click();
-  setTimeout(function(){URL.revokeObjectURL(url)},1000);
-}
-$('export').addEventListener('click',exportData);
 
 /* letter */
 var ltr=$('letter');
