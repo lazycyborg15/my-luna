@@ -12,7 +12,7 @@ const css = read('styles.css');
 const js = read('script.js');
 
 const dataFile = process.argv[2] || path.join(dir, 'our-blooms-data.json');
-let data = { names: undefined, photos: {} };
+let data = {};
 if (fs.existsSync(dataFile)) {
   data = JSON.parse(fs.readFileSync(dataFile, 'utf8'));
   console.log('Using data from', path.basename(dataFile));
@@ -21,10 +21,11 @@ if (fs.existsSync(dataFile)) {
 }
 
 const cfgRe = /(<script id="cfg" type="application\/json">)[\s\S]*?(<\/script>)/;
+const cfg = JSON.parse(html.match(cfgRe)[0].replace(/^[^>]*>|<\/script>$/g, ''));
 const cfgJson = JSON.stringify({
   locked: true,
-  names: data.names || JSON.parse(html.match(cfgRe)[0].replace(/^[^>]*>|<\/script>$/g, '')).names,
-  photos: data.photos || {},
+  names: data.names || cfg.names,
+  photos: data.photos || cfg.photos || {},
 }).replace(/</g, '\\u003c');
 
 html = html
