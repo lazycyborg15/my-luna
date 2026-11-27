@@ -9,10 +9,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Quicksand:wght@500;600&display=swap" rel="stylesheet">
 <style>
-:root{color-scheme:dark;--night:#171b24;--plum:#38243a;--ink:#463746;--paper:#fff8ee;--rose:#e987a8;--gold:#ffd36d}
+:root{color-scheme:dark;--night:#1a0f1f;--plum:#3d2a4a;--ink:#463746;--paper:#fff8ee;--rose:#e987a8;--gold:#ffd36d}
 *{box-sizing:border-box}
-body{margin:0;min-height:100vh;padding:32px 16px 56px;background:radial-gradient(ellipse at 50% 0%,#52354d 0,var(--plum) 32%,var(--night) 78%);color:#fff8ee;font-family:Quicksand,system-ui,sans-serif}
-body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.5;background-image:radial-gradient(#fff 1px,transparent 1.5px),radial-gradient(#ffd36d 1px,transparent 1.5px);background-size:83px 91px,137px 149px;background-position:12px 25px,53px 77px}
+body{margin:0;min-height:100vh;padding:32px 16px 56px;background:linear-gradient(135deg,#2a1538 0%,#3d2a4a 25%,#1a0f1f 50%,#3d2a4a 75%,#2a1538 100%);color:#fff8ee;font-family:Quicksand,system-ui,sans-serif}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.08;background-image:radial-gradient(circle at 20% 50%,#e987a8 0,transparent 50%),radial-gradient(circle at 80% 80%,#ffd36d 0,transparent 50%);mix-blend-mode:overlay}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;background:radial-gradient(ellipse at 50% 50%,#52354d 0%,var(--plum) 40%,var(--night) 100%)}
 body.zooming{overflow:hidden}
 body.zooming .back,body.zooming .intro,body.zooming .video-section,body.zooming .envelope-wrap .envelope:not(.is-zooming),body.zooming .letter{opacity:0;transition:opacity .3s ease}
 body.reading .back,body.reading .intro,body.reading .video-section,body.reading .envelope-wrap{display:none}
@@ -70,21 +71,10 @@ main{position:relative;width:min(100%,700px);margin:0 auto}
 }
 @keyframes seal-open{to{opacity:0;transform:translateX(-50%) scale(.6)}}
 @keyframes letter-pop{from{opacity:0;transform:translateY(36px) scale(.72)}to{opacity:1;transform:translateY(0) scale(1)}}
-@keyframes float-petal{0%{opacity:0;transform:translateY(-20px) translateX(0) rotate(0deg)}10%{opacity:1}90%{opacity:1}100%{opacity:0;transform:translateY(100vh) translateX(80px) rotate(360deg)}}
-@keyframes sway{0%,100%{transform:translateX(0)}50%{transform:translateX(20px)}}
-@keyframes bloom{0%{transform:scale(0) rotate(0deg)}50%{transform:scale(1.1)}100%{transform:scale(1) rotate(360deg)}}
-@keyframes glow-pulse{0%,100%{opacity:.6}50%{opacity:1}}
-.flower-scene{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
-.flower-scene.reading{z-index:0}
-.petal{position:absolute;font-size:1.5rem;opacity:0;will-change:transform}
-.flower{position:absolute;font-size:2rem;opacity:.7;will-change:transform}
-.daisy{animation:sway 4s ease-in-out infinite,glow-pulse 3s ease-in-out infinite}
-.rose{animation:bloom 8s ease-in-out infinite,glow-pulse 4s ease-in-out infinite}
-@media (prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important}.petal{animation:none!important}.flower{animation:none!important}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important}}
 </style>
 </head>
 <body>
-<div class="flower-scene" id="flowers" aria-hidden="true"></div>
 <main>
 <a class="back" href="index.html">← Back to our birthday page</a>
 <header class="intro">
@@ -93,7 +83,7 @@ main{position:relative;width:min(100%,700px);margin:0 auto}
 </header>
 <section class="video-section" aria-labelledby="video-title">
 <h2 id="video-title">A little moment for us ♥</h2>
-<video id="memory-video" controls playsinline preload="metadata" autoplay muted src="video/50b1204d-c2b8-4afb-bb21-424cca010d5f.mp4">Your browser does not support video playback.</video>
+<video id="memory-video" controls playsinline preload="metadata" autoplay muted src="video/video%202.mp4">Your browser does not support video playback.</video>
 <p id="video-status" role="status" aria-live="polite"></p>
 </section>
 <div class="envelope-wrap">
@@ -153,41 +143,7 @@ main{position:relative;width:min(100%,700px);margin:0 auto}
   var letters=document.querySelectorAll('.letter');
   var video=document.getElementById('memory-video');
   var videoStatus=document.getElementById('video-status');
-  var flowerScene=document.getElementById('flowers');
   var transitioning=false;
-  
-  function createFlowers(){
-    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
-    flowerScene.innerHTML='';
-    var flowers=['🌼','🌹','🌸','💐','🌺'];
-    var petals=['🌼','✿','❀','✻','⚘'];
-    
-    for(var i=0;i<8;i++){
-      var petal=document.createElement('div');
-      petal.className='petal';
-      petal.textContent=petals[Math.random()*petals.length|0];
-      petal.style.left=Math.random()*100+'%';
-      petal.style.top=-50+'px';
-      petal.style.animationName='float-petal';
-      petal.style.animationDuration=(8+Math.random()*6)+'s';
-      petal.style.animationDelay=Math.random()*2+'s';
-      petal.style.animationIterationCount='infinite';
-      flowerScene.appendChild(petal);
-    }
-    
-    for(var j=0;j<4;j++){
-      var flower=document.createElement('div');
-      flower.className='flower '+(Math.random()>.5?'daisy':'rose');
-      flower.textContent=flowers[Math.random()*flowers.length|0];
-      flower.style.left=(10+Math.random()*80)+'%';
-      flower.style.top=(10+Math.random()*60)+'%';
-      flower.style.animationDelay=Math.random()*2+'s';
-      flowerScene.appendChild(flower);
-    }
-  }
-  
-  createFlowers();
-  window.addEventListener('resize',createFlowers);
   
   video.addEventListener('play',function(){video.muted=false});
   video.addEventListener('error',function(){
@@ -208,7 +164,6 @@ main{position:relative;width:min(100%,700px);margin:0 auto}
     if(transitioning)return;
     transitioning=true;
     video.pause();
-    flowerScene.classList.add('reading');
     var rect=openButton.getBoundingClientRect();
     var startX=fromNext?(window.innerWidth-Math.min(window.innerWidth*.88,340))/2:rect.left;
     var startY=fromNext?(window.innerHeight-210)/2:rect.top;
@@ -249,7 +204,6 @@ main{position:relative;width:min(100%,700px);margin:0 auto}
     letter.querySelector('.fold').addEventListener('click',function(){
       resetLetters();
       document.body.classList.remove('reading');
-      flowerScene.classList.remove('reading');
       openButton.focus();
       openButton.scrollIntoView({behavior:'auto',block:'center'});
     });
