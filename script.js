@@ -82,9 +82,4 @@ $('back').addEventListener('click',function(){
   ['.greet','#open','#lopen'].forEach(function(q){var e=document.querySelector(q);e.style.animation='none';void e.offsetWidth;e.style.animation='';});
 });
 
-/* letter */
-var ltr=$('letter');
-$('lopen').addEventListener('click',function(){if(ltr.showModal)ltr.showModal();else ltr.setAttribute('open','')});
-$('lclose').addEventListener('click',function(){ltr.close()});
-ltr.addEventListener('click',function(e){if(e.target===ltr)ltr.close()});
 })();

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#171b24">
+<title>A Birthday Letter for My Love</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Quicksand:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark;--night:#171b24;--plum:#38243a;--ink:#463746;--paper:#fff8ee;--rose:#e987a8;--gold:#ffd36d}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;padding:32px 16px 56px;background:radial-gradient(ellipse at 50% 0%,#52354d 0,var(--plum) 32%,var(--night) 78%);color:#fff8ee;font-family:Quicksand,system-ui,sans-serif}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.5;background-image:radial-gradient(#fff 1px,transparent 1.5px),radial-gradient(#ffd36d 1px,transparent 1.5px);background-size:83px 91px,137px 149px;background-position:12px 25px,53px 77px}
+body.zooming{overflow:hidden}
+body.zooming .back,body.zooming .intro,body.zooming .video-section,body.zooming .envelope-wrap .envelope:not(.is-zooming),body.zooming .letter{opacity:0;transition:opacity .3s ease}
+body.reading .back,body.reading .intro,body.reading .video-section,body.reading .envelope-wrap{display:none}
+main{position:relative;width:min(100%,700px);margin:0 auto}
+.back{display:inline-block;margin:0 0 30px;color:#f5d6e0;text-underline-offset:4px}
+.intro{text-align:center;margin:0 auto 30px}
+.intro h1,.letter h2{font-family:"Dancing Script",cursive}
+.intro h1{font-size:clamp(2.5rem,9vw,4.4rem);line-height:1.04;margin:0 0 8px}
+.intro p{margin:0;color:#e8cfd8}
+.video-section{max-width:480px;margin:0 auto 36px;padding:20px;border:1px solid #ffffff30;border-radius:20px;background:#ffffff0d;text-align:center}
+.video-section h2{margin:0 0 12px;color:#ffe1e8;font:700 2rem "Dancing Script",cursive}
+.video-section video{display:block;width:100%;max-height:60vh;border-radius:12px;background:#171b24}
+.video-section p{margin:8px 0 0;color:#e8cfd8;font-size:.8rem;line-height:1.5}
+.envelope-wrap{display:grid;place-items:center;margin:24px auto}
+.envelope{position:relative;isolation:isolate;width:min(88vw,340px);height:210px;padding:0;overflow:visible;border:0;border-radius:12px;background:transparent;color:#563343;box-shadow:0 20px 55px #09081180;cursor:pointer;font:600 1rem Quicksand,system-ui,sans-serif;transition:transform .2s,box-shadow .2s}
+.envelope:hover{transform:translateY(-4px);box-shadow:0 26px 65px #09081199}
+.envelope:focus-visible,.back:focus-visible{outline:3px solid var(--gold);outline-offset:5px}
+.envelope-back,.envelope-front,.envelope-flap,.paper-slip{position:absolute;left:0;width:100%}
+.envelope-back{inset:0;border-radius:12px;background:linear-gradient(145deg,#f9c9d6,#e99bb4)}
+.paper-slip{z-index:2;bottom:22px;left:12%;display:grid;width:76%;height:145px;place-items:center;border-radius:6px 6px 0 0;background:var(--paper);color:#8f4c69;box-shadow:0 3px 12px #56334330;font-family:"Dancing Script",cursive;font-size:1.45rem;opacity:0;pointer-events:none}
+.envelope-front{z-index:3;bottom:0;height:62%;border-radius:0 0 12px 12px;background:linear-gradient(145deg,#efabc0,#e58da9);clip-path:polygon(0 100%,0 0,50% 58%,100% 0,100% 100%)}
+.envelope-flap{z-index:4;top:0;height:112px;border-radius:12px 12px 0 0;background:linear-gradient(145deg,#ffe2e7,#f8c5d2);clip-path:polygon(0 0,100% 0,50% 78%);transform-origin:top;backface-visibility:hidden}
+.seal{position:absolute;z-index:5;top:76px;left:50%;display:grid;place-items:center;width:44px;height:44px;border-radius:50%;transform:translateX(-50%);background:var(--rose);color:white;font-size:1.5rem;box-shadow:0 4px 12px #9f527266}
+.envelope-name,.envelope-label{position:absolute;z-index:5;left:0;width:100%;display:block;padding:0 10px;text-align:center}
+.envelope-name{bottom:42px;font-size:.82rem;letter-spacing:.04em;text-transform:uppercase;opacity:.8}
+.envelope-label{bottom:17px}
+.envelope.is-open .paper-slip{opacity:1}
+.envelope.is-open .paper-slip{transform:translateY(-78px)}
+.envelope.is-open .envelope-flap{transform:rotateX(180deg)}
+.envelope.is-open .seal{opacity:0}
+.envelope.is-zooming{position:fixed;z-index:20;top:0;left:0;margin:0;animation:zoom-through 1.6s ease-in-out forwards}
+.envelope.is-zooming .paper-slip{animation:letter-emerge 1.1s cubic-bezier(.2,.8,.2,1) forwards;opacity:1}
+.envelope.is-zooming .envelope-flap{animation:flap-open .45s ease-in forwards}
+.envelope.is-zooming .seal{animation:seal-open .35s ease forwards}
+.letter[hidden]{display:none}
+.letter{margin:0 auto;padding:clamp(24px,6vw,50px);border-radius:8px;background:var(--paper);color:var(--ink);box-shadow:0 22px 70px #08071080;line-height:1.85;font-size:1rem}
+.letter h2{margin:0 0 22px;text-align:center;color:#8f4c69;font-size:clamp(2.2rem,7vw,3rem);line-height:1.1}
+.letter p{margin:0 0 1.1em}
+.letter .poem{padding:18px 0;margin:20px auto;text-align:center;color:#784b67;font-family:"Dancing Script",cursive;font-size:1.4rem;line-height:1.55}
+.letter .poem p{margin:0 0 .75em}
+.letter .signoff{margin-top:24px;text-align:right;color:#8f4c69;font-family:"Dancing Script",cursive;font-size:1.7rem;line-height:1.4}
+.letter .closing{margin-top:20px;text-align:center;color:#8f4c69;font-family:"Dancing Script",cursive;font-size:1.65rem}
+.fold,.next-letter{display:block;margin:22px auto 0;padding:11px 20px;border:0;border-radius:99px;background:#563343;color:#fff8ee;font:600 .95rem Quicksand,system-ui,sans-serif;cursor:pointer}
+.fold:focus-visible,.next-letter:focus-visible{outline:3px solid #d87c9b;outline-offset:3px}
+@media (prefers-reduced-motion:no-preference){.letter:not([hidden]){animation:appear .65s ease both}.letter.letter-pop{animation:letter-pop .65s cubic-bezier(.2,1.35,.35,1) both}.seal{animation:heartbeat 2s ease-in-out infinite}}
+@keyframes appear{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes heartbeat{50%{transform:translateX(-50%) scale(1.08)}}
+@keyframes letter-emerge{from{opacity:0;transform:translateY(0)}to{opacity:1;transform:translateY(-78px)}}
+@keyframes flap-open{to{transform:rotateX(180deg)}}
+@keyframes zoom-through{
+0%,25%{transform:translate(var(--start-x),var(--start-y)) scale(1);opacity:1}
+55%{transform:translate(calc(50vw - 50%),calc(50vh - 50%)) scale(1.3);opacity:1}
+90%{transform:translate(calc(50vw - 50%),calc(50vh - 50%)) scale(7);opacity:1}
+100%{transform:translate(calc(50vw - 50%),calc(50vh - 50%)) scale(9);opacity:0}
+}
+@keyframes seal-open{to{opacity:0;transform:translateX(-50%) scale(.6)}}
+@keyframes letter-pop{from{opacity:0;transform:translateY(36px) scale(.72)}to{opacity:1;transform:translateY(0) scale(1)}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<main>
+<a class="back" href="index.html">← Back to our birthday page</a>
+<header class="intro">
+<h1>A little letter, just for you</h1>
+<p>Two little letters for my dearest pretty laaaaaablaaab ♥<br>Open each one for a different piece of my heart.</p>
+</header>
+<section class="video-section" aria-labelledby="video-title">
+<h2 id="video-title">A little moment for us ♥</h2>
+<video id="memory-video" controls playsinline preload="metadata" autoplay muted src="video/50b1204d-c2b8-4afb-bb21-424cca010d5f.mp4">Your browser does not support video playback.</video>
+<p id="video-status" role="status" aria-live="polite"></p>
+</section>
+<div class="envelope-wrap">
+<button class="envelope letter-toggle" type="button" aria-expanded="false" aria-controls="birthday-letter" data-open-label="Your first letter is open ♥" data-closed-label="Tap to open your first letter">
+<span class="envelope-back" aria-hidden="true"></span>
+<span class="paper-slip" aria-hidden="true">A little note for you ♥</span>
+<span class="envelope-front" aria-hidden="true"></span>
+<span class="envelope-flap" aria-hidden="true"></span>
+<span class="seal" aria-hidden="true">♥</span>
+<span class="envelope-name">Letter one · From my heart</span>
+<span class="envelope-label">Tap to open your first letter</span>
+</button>
+</div>
+<article class="letter" id="birthday-letter" hidden>
+<h2 tabindex="-1">To my dearest pretty laaaaaablaaab,</h2>
+<p>Happy birthday, my love! Today is your day, and you are sooo pretty, laaaaaablaaab—just like always. I'm so happy nga nagkuyog ta and that we got to celebrate your birthday together. Sunod, I'll make sure nga mas mapa-happy pa nato imong celebration.</p>
+<p>Thank you, love, for everything. Layo na ta'g naabot, pero layo pa ta'g journey—and through every part of it, I'll be with you always. I will love you no matter what happens. I want to keep putting a smile on your face and loving you for the rest of my life. I know words aren't enough, but I promise nga paningkamotan nako nga tinuod ang tanan nakong gisulti.</p>
+<p>You light up my world, laaaaaablaaab, and you are so important to me. I want to see you smiling and being your true self. Naa gyud tay ups and downs, but remember: sa tanang seasons nga atong nalabyan ug malabyan pa, naa ra gihapon ko sa imong kilid. I may not always know what you're struggling with, but naa ra ko pirmi—ready maminaw, mo-comfort nimo, ug moatiman nimo.</p>
+<p>I treat you as my queen and my princess, and no one could ever replace you. I'm so sure of us, love. I know we're still young, and marrying each other takes time and patience. I'll wait patiently, keep improving myself, and work toward becoming a better boyfriend—and someday, husband. I have my imperfections, laaaaaablaaab, but I'm willing to grow into a better version of myself and build a life with you, especially with God at the center of it.</p>
+<p>Kapila na nako ni gisulti, but I really mean it: tinood ang tanan nakong gipang-ingon. Bawi ra ko, ha, love. Thank you for staying and for choosing me despite our arguments and the problems we've been through. Even when we're both tired—physically or mentally—naa ra gihapon ko sa imong side. We can rest together, love.</p>
+<p>I may not have a physical gift for you, but I can give you my loyalty and my love, for as long as I live. I see my future in your eyes, and I want to stand by your side while we reach our plans and dreams together.</p>
+<p>I love everything about you: how you treat and understand me; the way you smile, think, laugh, and speak; your eyes, your lips, and your beautiful personality. Ikaw ang usa sa mga rason nga nausab ko ug naningkamot ko mahimong mas maayo pa. I love how you always look for a way to fix things when we have problems—like when you helped me look for a way to sort out my tuition. Thank you for caring that much.</p>
+<p>I love our silly moments and every moment we spend together. I love how you prioritize and care for your family and your education. I love how you love my family, too. Kasabot ko nga usahay maulaw ka, and that's okay, laaaaaablaaab—kasabot ra ko nimo, ug gihigugma gihapon tika. I love the little ways you comfort me, like patting my head or my back when I have a problem. I appreciate you so much, forever and ever, my beautiful birthday girl.</p>
+<p>I want to see you win, laaaaaablaaab, and I'll always be your number one supporter. We'll worship God together and be thankful for His blessings and guidance. I love you, I miss you, and I'll stay by your side—always.</p>
+<p>Happy birthday once again, my love! Amping ka always, ha. I know you might be asleep right now, but I wanted you to wake up knowing just how much I love you.</p>
+<p class="closing">I looovee you soo much, my beautiful birthday girl ♥</p>
+<p class="signoff">Forever yours,<br>your love</p>
+<button class="next-letter" type="button">Next letter ♥</button>
+<button class="fold" id="fold-letter" type="button">Fold the letter</button>
+</article>
+<div class="envelope-wrap">
+<button class="envelope letter-toggle" type="button" aria-expanded="false" aria-controls="star-letter" data-open-label="Your second letter is open ♥" data-closed-label="Tap to open your second letter">
+<span class="envelope-back" aria-hidden="true"></span>
+<span class="paper-slip" aria-hidden="true">A little note for you ♥</span>
+<span class="envelope-front" aria-hidden="true"></span>
+<span class="envelope-flap" aria-hidden="true"></span>
+<span class="seal" aria-hidden="true">♥</span>
+<span class="envelope-name">Letter two · Written in the stars</span>
+<span class="envelope-label">Tap to open your second letter</span>
+</button>
+</div>
+<article class="letter" id="star-letter" hidden>
+<h2 tabindex="-1">To my favorite light,</h2>
+<div class="poem" aria-label="A poem about our love">
+<p>Out in the dark where the galaxies turn,<br>A million distant beacons burn,<br>Spinning through time in a silver haze,<br>Chasing the warmth of brighter days.</p>
+<p>Yet out of all the stars I’ve known,<br>None shine as soft as what we’ve grown,<br>A steady light through thick and thin,<br>The sweetest place I’ve ever been.</p>
+<p>You are the gravity holding me near,<br>The calm in the rush of every year,<br>The hand I reach for in the night,<br>My forever home, my favorite light.</p>
+</div>
+<p class="closing">Happy birthday, my love. You will always be my favorite light. ♥</p>
+<p class="signoff">All my love,<br>forever yours</p>
+<button class="fold" type="button">Fold the letter</button>
+</article>
+</main>
+<script>
+(function(){
+  var buttons=document.querySelectorAll('.letter-toggle');
+  var letters=document.querySelectorAll('.letter');
+  var video=document.getElementById('memory-video');
+  var videoStatus=document.getElementById('video-status');
+  var transitioning=false;
+  video.addEventListener('play',function(){video.muted=false});
+  video.addEventListener('error',function(){
+    videoStatus.textContent='This video could not be played. Please check that the video file is available and supported by your browser.';
+  });
+  function resetLetters(){
+    Array.prototype.forEach.call(letters,function(letter){
+      letter.hidden=true;
+      letter.classList.remove('letter-pop');
+    });
+    Array.prototype.forEach.call(buttons,function(button){
+      button.classList.remove('is-open');
+      button.setAttribute('aria-expanded','false');
+      button.querySelector('.envelope-label').textContent=button.getAttribute('data-closed-label');
+    });
+  }
+  function openLetter(openButton,fromNext){
+    if(transitioning)return;
+    transitioning=true;
+    video.pause();
+    var rect=openButton.getBoundingClientRect();
+    var startX=fromNext?(window.innerWidth-Math.min(window.innerWidth*.88,340))/2:rect.left;
+    var startY=fromNext?(window.innerHeight-210)/2:rect.top;
+    openButton.style.setProperty('--start-x',startX+'px');
+    openButton.style.setProperty('--start-y',startY+'px');
+    resetLetters();
+    var letter=document.getElementById(openButton.getAttribute('aria-controls'));
+    var label=openButton.querySelector('.envelope-label');
+    document.body.classList.remove('reading');
+    document.body.classList.add('zooming');
+    openButton.classList.add('is-zooming');
+    openButton.disabled=true;
+    label.textContent='Opening your letter...';
+    function revealLetter(){
+      openButton.removeEventListener('animationend',onZoomEnd);
+      document.body.classList.remove('zooming');
+      document.body.classList.add('reading');
+      openButton.classList.remove('is-zooming');
+      openButton.classList.add('is-open');
+      openButton.disabled=false;
+      openButton.setAttribute('aria-expanded','true');
+      label.textContent=openButton.getAttribute('data-open-label');
+      letter.hidden=false;
+      letter.classList.add('letter-pop');
+      letter.scrollIntoView({behavior:'auto',block:'start'});
+      letter.querySelector('h2').focus({preventScroll:true});
+      transitioning=false;
+    }
+    function onZoomEnd(event){
+      if(event.target===openButton&&event.animationName==='zoom-through'){revealLetter();}
+    }
+    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){revealLetter();}
+    else{openButton.addEventListener('animationend',onZoomEnd);}
+  }
+  Array.prototype.forEach.call(buttons,function(openButton){
+    var letter=document.getElementById(openButton.getAttribute('aria-controls'));
+    openButton.addEventListener('click',function(){openLetter(openButton,false)});
+    letter.querySelector('.fold').addEventListener('click',function(){
+      resetLetters();
+      document.body.classList.remove('reading');
+      openButton.focus();
+      openButton.scrollIntoView({behavior:'auto',block:'center'});
+    });
+  });
+  document.querySelector('.next-letter').addEventListener('click',function(){openLetter(buttons[1],true)});
+})();
+</script>
+</body>
+</html>
