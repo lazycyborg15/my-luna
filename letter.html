@@ -70,10 +70,21 @@ main{position:relative;width:min(100%,700px);margin:0 auto}
 }
 @keyframes seal-open{to{opacity:0;transform:translateX(-50%) scale(.6)}}
 @keyframes letter-pop{from{opacity:0;transform:translateY(36px) scale(.72)}to{opacity:1;transform:translateY(0) scale(1)}}
-@media (prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important}}
+@keyframes float-petal{0%{opacity:0;transform:translateY(-20px) translateX(0) rotate(0deg)}10%{opacity:1}90%{opacity:1}100%{opacity:0;transform:translateY(100vh) translateX(80px) rotate(360deg)}}
+@keyframes sway{0%,100%{transform:translateX(0)}50%{transform:translateX(20px)}}
+@keyframes bloom{0%{transform:scale(0) rotate(0deg)}50%{transform:scale(1.1)}100%{transform:scale(1) rotate(360deg)}}
+@keyframes glow-pulse{0%,100%{opacity:.6}50%{opacity:1}}
+.flower-scene{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.flower-scene.reading{z-index:0}
+.petal{position:absolute;font-size:1.5rem;opacity:0;will-change:transform}
+.flower{position:absolute;font-size:2rem;opacity:.7;will-change:transform}
+.daisy{animation:sway 4s ease-in-out infinite,glow-pulse 3s ease-in-out infinite}
+.rose{animation:bloom 8s ease-in-out infinite,glow-pulse 4s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important}.petal{animation:none!important}.flower{animation:none!important}}
 </style>
 </head>
 <body>
+<div class="flower-scene" id="flowers" aria-hidden="true"></div>
 <main>
 <a class="back" href="index.html">← Back to our birthday page</a>
 <header class="intro">
@@ -142,7 +153,42 @@ main{position:relative;width:min(100%,700px);margin:0 auto}
   var letters=document.querySelectorAll('.letter');
   var video=document.getElementById('memory-video');
   var videoStatus=document.getElementById('video-status');
+  var flowerScene=document.getElementById('flowers');
   var transitioning=false;
+  
+  function createFlowers(){
+    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+    flowerScene.innerHTML='';
+    var flowers=['🌼','🌹','🌸','💐','🌺'];
+    var petals=['🌼','✿','❀','✻','⚘'];
+    
+    for(var i=0;i<8;i++){
+      var petal=document.createElement('div');
+      petal.className='petal';
+      petal.textContent=petals[Math.random()*petals.length|0];
+      petal.style.left=Math.random()*100+'%';
+      petal.style.top=-50+'px';
+      petal.style.animationName='float-petal';
+      petal.style.animationDuration=(8+Math.random()*6)+'s';
+      petal.style.animationDelay=Math.random()*2+'s';
+      petal.style.animationIterationCount='infinite';
+      flowerScene.appendChild(petal);
+    }
+    
+    for(var j=0;j<4;j++){
+      var flower=document.createElement('div');
+      flower.className='flower '+(Math.random()>.5?'daisy':'rose');
+      flower.textContent=flowers[Math.random()*flowers.length|0];
+      flower.style.left=(10+Math.random()*80)+'%';
+      flower.style.top=(10+Math.random()*60)+'%';
+      flower.style.animationDelay=Math.random()*2+'s';
+      flowerScene.appendChild(flower);
+    }
+  }
+  
+  createFlowers();
+  window.addEventListener('resize',createFlowers);
+  
   video.addEventListener('play',function(){video.muted=false});
   video.addEventListener('error',function(){
     videoStatus.textContent='This video could not be played. Please check that the video file is available and supported by your browser.';
@@ -162,6 +208,7 @@ main{position:relative;width:min(100%,700px);margin:0 auto}
     if(transitioning)return;
     transitioning=true;
     video.pause();
+    flowerScene.classList.add('reading');
     var rect=openButton.getBoundingClientRect();
     var startX=fromNext?(window.innerWidth-Math.min(window.innerWidth*.88,340))/2:rect.left;
     var startY=fromNext?(window.innerHeight-210)/2:rect.top;
@@ -202,6 +249,7 @@ main{position:relative;width:min(100%,700px);margin:0 auto}
     letter.querySelector('.fold').addEventListener('click',function(){
       resetLetters();
       document.body.classList.remove('reading');
+      flowerScene.classList.remove('reading');
       openButton.focus();
       openButton.scrollIntoView({behavior:'auto',block:'center'});
     });
